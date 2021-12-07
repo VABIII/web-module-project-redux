@@ -8,6 +8,7 @@ const AddMovieForm = (props) => {
     const { push } = useHistory();
 
     const [movie, setMovie] = useState({
+        id: props.movies.length + 1,
         title: "",
         director: "",
         genre: "",
@@ -22,7 +23,10 @@ const AddMovieForm = (props) => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = () => {
+        props.addMovie(movie);
+        push("/movies")
+
     }
 
     const { title, director, genre, metascore, description } = movie;
@@ -55,7 +59,6 @@ const AddMovieForm = (props) => {
                             <label>Description</label>
                             <textarea value={description} onChange={handleChange} name="description" className="form-control"></textarea>
                         </div>
-                        			
                     </div>
                     <div className="modal-footer">
                         <input type="submit" className="btn btn-success" value="Add"/>
@@ -67,4 +70,11 @@ const AddMovieForm = (props) => {
     </div>);
 }
 
-export default AddMovieForm;
+const mapStateToProps = state => {
+    return({
+        movies: state.movies
+    })
+}
+
+
+export default connect(mapStateToProps, {addMovie})(AddMovieForm);
