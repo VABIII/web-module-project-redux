@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { addMovie } from './../actions/movieActions';
+import { addMovie } from '../actions/movieActions';
 import { connect } from 'react-redux';
 
 import { Link, useHistory } from 'react-router-dom';
 
 const AddMovieForm = (props) => {
     const { push } = useHistory();
-
+    console.log(props.movies)
     const [movie, setMovie] = useState({
         id: props.movies.length + 1,
         title: "",
@@ -21,14 +21,15 @@ const AddMovieForm = (props) => {
             ...movie,
             [e.target.name]: e.target.value
         });
-    }
+    };
 
     const handleSubmit = () => {
         props.addMovie(movie);
-        push("/movies")
-    }
+        push("/movies");
+    };
 
     const { title, director, genre, metascore, description } = movie;
+
     return(<div className="col">
         <div className="modal-dialog">
             <div className="modal-content">
@@ -36,7 +37,6 @@ const AddMovieForm = (props) => {
                     <div className="modal-header">						
                         <h4 className="modal-title">Add Movie</h4>
                     </div>
-
                     <div className="modal-body">					
                         <div className="form-group">
                             <label>Title</label>
@@ -67,13 +67,12 @@ const AddMovieForm = (props) => {
             </div>
         </div>
     </div>);
-}
+};
 
 const mapStateToProps = state => {
     return({
-        movies: state.movies
+        movies: state.movies.movies
     })
-}
-
+};
 
 export default connect(mapStateToProps, {addMovie})(AddMovieForm);
