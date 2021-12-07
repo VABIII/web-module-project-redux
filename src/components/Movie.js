@@ -14,8 +14,7 @@ const Movie = (props) => {
     const handleDelete = () => {
         props.deleteMovie(movie.id);
         push("/movies")
-    }
-
+    };
     
     return(<div className="modal-page col">
         <div className="modal-dialog">
@@ -46,7 +45,7 @@ const Movie = (props) => {
                         </section>
                         
                         <section>
-                            <span className="m-2 btn btn-dark">Favorite</span>
+                            { !props.displayFavorites &&  <span className="m-2 btn btn-dark">Favorite</span>}
                             <span className="delete">
                                 <input
                                     type="button"
@@ -55,6 +54,7 @@ const Movie = (props) => {
                                     onClick={handleDelete}
                                 />
                             </span>
+
                         </section>
                     </div>
                 </div>
@@ -65,9 +65,11 @@ const Movie = (props) => {
 
 const mapStateToProps = state => {
     return({
-        movies: state.movies
+        movies: state.movies.movies,
+        displayFavorites: state.favorites.displayFavorites
+
     })
-}
+};
 
 
 
